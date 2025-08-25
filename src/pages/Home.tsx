@@ -196,8 +196,9 @@ const Home: React.FC = () => {
     setApiError(null);
     
     try {
-      // Backend API endpoint - update with your actual endpoint
-      const endpoint = 'https://your-backend-service.com/api/store-api-key';
+      // Get API base URL from environment variables with fallback
+      const apiBaseUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+      const endpoint = `${apiBaseUrl}/api/store-api-key`;
       
       // Use groups from authentication if available
       const userGroup = groups && groups.length > 0 ? groups[0] : undefined;
