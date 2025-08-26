@@ -236,7 +236,7 @@ const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
       <div className="absolute top-4 left-4">
-        <img src="/favicon.ico" alt="Jola AI Logo" className="h-12 w-12" />
+        <img src="/Jola_icon_no_background.png" alt="Jola AI Logo" className="h-12 w-12" />
       </div>
       <div className="absolute top-4 right-4">
         <Button 
