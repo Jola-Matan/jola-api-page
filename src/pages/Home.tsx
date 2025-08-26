@@ -59,12 +59,12 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6" style={{ backgroundColor: "#FAFAFA" }}>
-      <div className="mb-10">
-        <h1 className="text-6xl font-bold text-center" style={{ color: "#232A34" }}>
-          API Key Configuration
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold text-center" style={{ color: "#232A34" }}>
+          Jola AI
         </h1>
-        <p className="text-center mt-3 text-xl" style={{ color: "#8A94A6" }}>
-          Configure your SEO tool integrations
+        <p className="text-center mt-2 text-lg" style={{ color: "#8A94A6" }}>
+          API Key Configuration
         </p>
       </div>
       <Card
@@ -72,9 +72,9 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
         style={{ backgroundColor: "#F5F5F5", borderColor: "#8A94A6" }}
       >
         <div className="p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="service" className="block mb-2 text-lg font-medium text-gray-700">
+              <label htmlFor="service" className="block mb-2 text-md font-medium text-gray-700">
                 Select Service
               </label>
               <div className="relative">
@@ -85,7 +85,7 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
                   id="service"
                   value={service}
                   onChange={(e) => setService(e.target.value)}
-                  className="w-full pl-10 rounded-lg border p-3 text-lg"
+                  className="w-full pl-10 rounded-lg border p-2 text-md"
                   style={{
                     backgroundColor: "#FAFAFA",
                     borderColor: "#8A94A6",
@@ -103,7 +103,7 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
             </div>
             
             <div>
-              <label htmlFor="apiKey" className="block mb-2 text-lg font-medium text-gray-700">
+              <label htmlFor="apiKey" className="block mb-2 text-md font-medium text-gray-700">
                 API Key
               </label>
               <div className="relative">
@@ -116,7 +116,7 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
                   value={apiKey}
                   onChange={(e) => setApiKey(e.target.value)}
                   placeholder="Enter your API key"
-                  className="w-full pl-10 rounded-lg border p-3 text-lg"
+                  className="w-full pl-10 rounded-lg border p-2 text-md"
                   style={{
                     backgroundColor: "#FAFAFA",
                     borderColor: "#8A94A6",
@@ -157,7 +157,7 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
             <Button 
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg py-3 text-lg font-medium shadow-md hover:shadow-lg text-white"
+              className="w-full rounded-lg py-2 text-md font-medium shadow-md hover:shadow-lg text-white"
               style={{ backgroundColor: "#232A34" }}
             >
               {loading ? (
@@ -235,11 +235,15 @@ const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
+      <div className="absolute top-4 left-4">
+        <img src="/favicon.ico" alt="Jola AI Logo" className="h-12 w-12" />
+      </div>
       <div className="absolute top-4 right-4">
         <Button 
           onClick={handleLogout}
-          variant="destructive"
-          className="rounded-lg px-4 py-2"
+          variant="outline"
+          className="rounded-lg px-6 py-3 text-lg font-semibold shadow-md hover:shadow-lg transition-shadow duration-300"
+          style={{ color: "#232A34", borderColor: "#8A94A6" }}
         >
           Logout
         </Button>
