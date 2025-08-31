@@ -26,10 +26,17 @@ export const sendApiKey = async (
   payload: ApiKeyPayload, 
   endpoint: string = '/api/store-api-key'
 ): Promise<any> => {
-  // Encode the API key using Base64
+  // Ensure API key meets minimum length requirement (5 chars) and userGroup is always defined
+  if (payload.apiKey.length < 5) {
+    console.warn('API key is too short (minimum 5 characters required)');
+    throw new Error('API key must be at least 5 characters long');
+  }
+  
+  // Encode the API key using Base64 and ensure all required fields are present
   const encodedPayload = {
     ...payload,
     apiKey: encodeToBase64(payload.apiKey),
+    userGroup: payload.userGroup || 'default', // Ensure userGroup is never undefined
     timestamp: new Date().toISOString()
   };
 
@@ -57,8 +64,31 @@ export const sendApiKey = async (
       });
     }
 
+    // Debug log to see what's being sent (with API key redacted for security)
+    console.log('DEBUG - Sending payload to:', endpoint);
+    console.log('DEBUG - Payload data:', {
+      ...encodedPayload,
+      apiKey: `[REDACTED - Length: ${encodedPayload.apiKey.length}]`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': localStorage.getItem('id_token') ? 'Bearer [REDACTED JWT]' : 'None'
+      }
+    });
+    
+    // Add userGroup as a query parameter instead of in the body
+    const userGroup = encodedPayload.userGroup || 'default';
+    
+    // Construct URL with query parameter
+    const urlWithParams = new URL(endpoint);
+    urlWithParams.searchParams.append('user_group', userGroup);
+    
+    // Remove userGroup from the payload since it's now a query parameter
+    const { userGroup: _, ...payloadWithoutUserGroup } = encodedPayload;
+    
+    console.log('DEBUG - Using URL with params:', urlWithParams.toString());
+    
     // Real API call for production or when endpoint is specified
-    const response = await fetch(endpoint, {
+    const response = await fetch(urlWithParams.toString(), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -67,15 +97,44 @@ export const sendApiKey = async (
           'Authorization': `Bearer ${localStorage.getItem('id_token')}`
         })
       },
-      body: JSON.stringify(encodedPayload),
+      body: JSON.stringify(payloadWithoutUserGroup),
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => null);
+      // Log the entire response for debugging
+      console.log('DEBUG - Server error response:', {
+        status: response.status,
+        statusText: response.statusText,
+        headers: Object.fromEntries([...response.headers.entries()])
+      });
+
+      // Try to parse the error response
+      const errorData = await response.json().catch(() => {
+        console.log('DEBUG - Failed to parse error response as JSON');
+        return null;
+      });
+      
+      if (errorData) {
+        console.log('DEBUG - Server error details:', errorData);
+        
+        // Handle FastAPI validation error format
+        if (errorData.detail && Array.isArray(errorData.detail)) {
+          const errorMessages = errorData.detail.map((err: any) => {
+            const location = err.loc ? err.loc.join('.') : 'unknown';
+            return `${err.msg} (at ${location})`;
+          }).join('; ');
+          
+          console.log('Validation error details:', errorMessages);
+          throw new Error(errorMessages || `Validation error: ${response.status}`);
+        }
+      }
+      
       throw new Error(errorData?.message || `Server error: ${response.status}`);
     }
 
-    return await response.json();
+    const responseData = await response.json();
+    console.log('DEBUG - Successful response:', responseData);
+    return responseData;
   } catch (error) {
     console.error('API key submission error:', error);
     throw error;

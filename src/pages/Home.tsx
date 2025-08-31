@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import amplifyConfig from '../amplifyConfig';
 import { Button } from "../components/button";
 import { Card } from "../components/card";
-import { Key, Check, X, Loader2, Globe, Search, BarChart, Scan } from "lucide-react";
+import { Key, Check, X, Loader2, Search } from "lucide-react";
 import { useAuthenticatedUser } from "../hooks/useAuthenticatedUser";
 import { sendApiKey } from '../services/api';
 
@@ -13,14 +13,6 @@ const getServiceIcon = (service: string) => {
     case 'semrush':
     case 'ahrefs':
       return <Search className="h-5 w-5 text-blue-600" />;
-    case 'similarweb':
-      return <Globe className="h-5 w-5 text-purple-600" />;
-    case 'keyword-planner':
-      return <Key className="h-5 w-5 text-green-600" />;
-    case 'rank-ranger':
-      return <BarChart className="h-5 w-5 text-orange-600" />;
-    case 'screaming-frog':
-      return <Scan className="h-5 w-5 text-red-600" />;
     default:
       return <Search className="h-5 w-5 text-gray-600" />;
   }
@@ -94,10 +86,6 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
                 >
                   <option value="semrush">Semrush</option>
                   <option value="ahrefs">Ahrefs</option>
-                  <option value="similarweb">Similarweb</option>
-                  <option value="keyword-planner">Keyword Planner</option>
-                  <option value="rank-ranger">Rank Ranger</option>
-                  <option value="screaming-frog">Screaming Frog</option>
                 </select>
               </div>
             </div>
