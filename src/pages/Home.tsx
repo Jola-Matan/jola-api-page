@@ -13,6 +13,8 @@ const getServiceIcon = (service: string) => {
     case 'semrush':
     case 'ahrefs':
       return <Search className="h-5 w-5 text-blue-600" />;
+    case 'google-ads':
+      return <Key className="h-5 w-5 text-red-600" />;
     default:
       return <Search className="h-5 w-5 text-gray-600" />;
   }
@@ -86,6 +88,7 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
                 >
                   <option value="semrush">Semrush</option>
                   <option value="ahrefs">Ahrefs</option>
+                  <option value="google-ads">Google Ads Customer ID</option>
                 </select>
               </div>
             </div>
