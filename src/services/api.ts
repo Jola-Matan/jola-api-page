@@ -28,7 +28,7 @@ export const sendApiKey = async (
 ): Promise<any> => {
   // Ensure API key meets minimum length requirement (5 chars) and userGroup is always defined
   if (payload.apiKey.length < 5) {
-    console.warn('API key is too short (minimum 5 characters required)');
+    // console.warn('API key is too short (minimum 5 characters required)');
     throw new Error('API key must be at least 5 characters long');
   }
   
@@ -46,12 +46,6 @@ export const sendApiKey = async (
   try {
     // For local development without a backend, you can mock the response or skip the fetch
     if (isDevelopment && !endpoint.startsWith('http')) {
-      console.log('Development mode: Mocking API request', {
-        service: payload.service,
-        userGroup: payload.userGroup,
-        // Don't log the actual API key, just a placeholder
-        apiKeyLength: payload.apiKey.length
-      });
       
       // Return a mock successful response after a short delay
       return new Promise((resolve) => {
@@ -65,15 +59,7 @@ export const sendApiKey = async (
     }
 
     // Debug log to see what's being sent (with API key redacted for security)
-    console.log('DEBUG - Sending payload to:', endpoint);
-    console.log('DEBUG - Payload data:', {
-      ...encodedPayload,
-      apiKey: `[REDACTED - Length: ${encodedPayload.apiKey.length}]`,
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': localStorage.getItem('id_token') ? 'Bearer [REDACTED JWT]' : 'None'
-      }
-    });
+    // console.log('DEBUG - Sending payload to:', endpoint);
     
     // Add userGroup as a query parameter instead of in the body
     const userGroup = encodedPayload.userGroup || 'default';
@@ -85,7 +71,7 @@ export const sendApiKey = async (
     // Remove userGroup from the payload since it's now a query parameter
     const { userGroup: _, ...payloadWithoutUserGroup } = encodedPayload;
     
-    console.log('DEBUG - Using URL with params:', urlWithParams.toString());
+    // console.log('DEBUG - Using URL with params:', urlWithParams.toString());
     
     // Real API call for production or when endpoint is specified
     const response = await fetch(urlWithParams.toString(), {
@@ -102,20 +88,15 @@ export const sendApiKey = async (
 
     if (!response.ok) {
       // Log the entire response for debugging
-      console.log('DEBUG - Server error response:', {
-        status: response.status,
-        statusText: response.statusText,
-        headers: Object.fromEntries([...response.headers.entries()])
-      });
 
       // Try to parse the error response
       const errorData = await response.json().catch(() => {
-        console.log('DEBUG - Failed to parse error response as JSON');
+        // console.log('DEBUG - Failed to parse error response as JSON');
         return null;
       });
       
       if (errorData) {
-        console.log('DEBUG - Server error details:', errorData);
+        // console.log('DEBUG - Server error details:', errorData);
         
         // Handle FastAPI validation error format
         if (errorData.detail && Array.isArray(errorData.detail)) {
