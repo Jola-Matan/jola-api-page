@@ -94,7 +94,7 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
                   <option value="ahrefs">Ahrefs</option>
                   <option value="google-ads">Google Ads Customer ID</option>
                   <option value="google-refresh-token">Google Refresh Token</option>
-                  <option value="google-ads-refresh-token">Google Refresh Token</option>
+                  <option value="google-ads-refresh-token">Google Ads Refresh Token</option>
                 </select>
               </div>
             </div>
