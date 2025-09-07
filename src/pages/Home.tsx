@@ -15,6 +15,8 @@ const getServiceIcon = (service: string) => {
       return <Search className="h-5 w-5 text-blue-600" />;
     case 'google-ads':
       return <Key className="h-5 w-5 text-red-600" />;
+    case 'google-refresh-token':
+      return <Key className="h-5 w-5 text-green-600" />;
     default:
       return <Search className="h-5 w-5 text-gray-600" />;
   }
