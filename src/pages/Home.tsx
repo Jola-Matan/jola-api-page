@@ -11,7 +11,9 @@ import { sendApiKey } from '../services/api';
 const getServiceIcon = (service: string) => {
   switch (service) {
     case 'semrush':
-    case 'ahrefs':
+    case 'ahrefs-name':
+      return <Search className="h-5 w-5 text-blue-600" />;
+    case 'ahrefs-password':
       return <Search className="h-5 w-5 text-blue-600" />;
     case 'google-ads':
       return <Key className="h-5 w-5 text-red-600" />;
@@ -91,7 +93,8 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
                   }}
                 >
                   <option value="semrush">Semrush</option>
-                  <option value="ahrefs">Ahrefs</option>
+                  <option value="ahrefs-name">Ahrefs-name</option>
+                  <option value="ahrefs-password">Ahrefs-password</option>
                   <option value="google-ads">Google Ads Customer ID</option>
                   <option value="google-refresh-token">Google Refresh Token</option>
                   <option value="google-ads-refresh-token">Google Ads Refresh Token</option>
