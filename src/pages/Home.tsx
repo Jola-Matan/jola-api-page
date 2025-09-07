@@ -17,6 +17,8 @@ const getServiceIcon = (service: string) => {
       return <Key className="h-5 w-5 text-red-600" />;
     case 'google-refresh-token':
       return <Key className="h-5 w-5 text-green-600" />;
+    case 'google-ads-refresh-token':
+      return <Key className="h-5 w-5 text-green-600" />;
     default:
       return <Search className="h-5 w-5 text-gray-600" />;
   }
@@ -92,6 +94,7 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
                   <option value="ahrefs">Ahrefs</option>
                   <option value="google-ads">Google Ads Customer ID</option>
                   <option value="google-refresh-token">Google Refresh Token</option>
+                  <option value="google-ads-refresh-token">Google Refresh Token</option>
                 </select>
               </div>
             </div>
