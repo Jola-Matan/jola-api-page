@@ -21,6 +21,10 @@ const getServiceIcon = (service: string) => {
       return <Key className="h-5 w-5 text-green-600" />;
     case 'google-ads-refresh-token':
       return <Key className="h-5 w-5 text-green-600" />;
+    case 'ahrefs-api-key':
+      return <Key className="h-5 w-5 text-red-600" />;
+    case 'similarweb-api-key':
+      return <Key className="h-5 w-5 text-red-600" />;
     default:
       return <Search className="h-5 w-5 text-gray-600" />;
   }
@@ -93,8 +97,10 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
                   }}
                 >
                   <option value="semrush">Semrush</option>
-                  <option value="ahrefs-name">Ahrefs-name</option>
-                  <option value="ahrefs-password">Ahrefs-password</option>
+                  <option value="ahrefs-api-key"> Ahrefs API Key </option>
+                  <option value="ahrefs-name">Ahrefs Username</option>
+                  <option value="ahrefs-password">Ahrefs Password</option>
+                  <option value="similarweb-api-key"> Similarweb API Key </option>
                   <option value="google-ads">Google Ads Customer ID</option>
                   <option value="google-refresh-token">Google Refresh Token</option>
                   <option value="google-ads-refresh-token">Google Ads Refresh Token</option>
