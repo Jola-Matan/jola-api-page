@@ -15,6 +15,8 @@ const getServiceIcon = (service: string) => {
       return <Search className="h-5 w-5 text-blue-600" />;
     case 'ahrefs-password':
       return <Search className="h-5 w-5 text-blue-600" />;
+    case 'ahrefs-mcp-key':
+      return <Search className="h-5 w-5 text-blue-600" />;
     case 'google-ads':
       return <Key className="h-5 w-5 text-red-600" />;
     case 'google-refresh-token':
@@ -98,6 +100,7 @@ function ApiKeyForm({ onSubmit, loading, error }: ApiKeyFormProps) {
                 >
                   <option value="semrush">Semrush</option>
                   <option value="ahrefs-api-key"> Ahrefs API Key </option>
+                  <option value="ahrefs-mcp-key">Ahrefs MCP Key</option>
                   <option value="ahrefs-name">Ahrefs Username</option>
                   <option value="ahrefs-password">Ahrefs Password</option>
                   <option value="similarweb-api-key"> Similarweb API Key </option>
